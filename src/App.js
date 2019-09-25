@@ -2,6 +2,20 @@ import React, { Component } from "react";
 import axios from 'axios';
 import "./App.css";
 
+axios.interceptors.response.use(null, error => {
+  const expectedError =
+    error.response &&
+    error.response.status >= 400 &&
+    error.response.status < 500;
+
+  if (!expectedError) {
+    console.log("Logging the error", error);
+    alert("an Unexpected error occurred.")
+  }
+
+  return Promise.reject(error);
+});
+
 const apiEndPoint = 'https://jsonplaceholder.typicode.com/posts'
 
 class App extends Component {
@@ -52,12 +66,7 @@ class App extends Component {
       // - Display a generic and friendly error message
 
       if (ex.response && ex.response.status === 404)
-        alert('Something failed while deleting a post');
-      else {
-        console.log("Logging the error", ex);
-        alert("an unexpected error occurred");
-      }
-
+        alert('This post has already been deleted.');
       this.setState({ posts: orginalPosts });
     }
   };
