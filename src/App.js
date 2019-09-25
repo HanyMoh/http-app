@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import "./App.css";
-import { timingSafeEqual } from "crypto";
 
 const apiEndPoint = 'https://jsonplaceholder.typicode.com/posts'
 
@@ -34,8 +33,11 @@ class App extends Component {
     this.setState({ posts });
   };
 
-  handleDelete = post => {
-    console.log("Delete", post);
+  handleDelete = async post => {
+    await axios.delete(apiEndPoint + "/" + post.id)
+
+    const posts = this.state.posts.filter(p => p.id !== post.id);
+    this.setState({ posts });
   };
 
   render() {
