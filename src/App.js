@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { ToastContainer } from 'react-toastify';
 import http from './services/httpServices';
 import config from './config.json'
-import "./App.css"; 
+import 'react-toastify/dist/ReactToastify.css';
+import "./App.css";
 
 class App extends Component {
   state = {
@@ -59,6 +61,7 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
+        <ToastContainer />
         <button className="btn btn-primary" onClick={this.handleAdd}>
           Add
         </button>
